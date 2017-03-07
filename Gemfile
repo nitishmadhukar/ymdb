@@ -44,6 +44,12 @@ gem 'httparty', '~> 0.14.0'
 # ActiveModel::Serializers allows you to generate your JSON in an object-oriented and convention-driven manner.
 gem 'active_model_serializers', '~> 0.10.5'
 
+# will_paginate provides a simple API for performing paginated queries with Active Record, DataMapper and Sequel, and includes helpers for rendering pagination links in Rails, Sinatra and Merb web apps.
+gem 'will_paginate', '~> 3.1', '>= 3.1.5'
+
+# Link header pagination for Rails and Grape APIs
+gem 'api-pagination', '~> 4.5', '>= 4.5.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -53,17 +59,17 @@ group :development, :test do
 
   # Combine 'pry' with 'byebug'. Adds 'step', 'next', 'finish', 'continue' and 'break' commands to control execution.
   gem 'pry-byebug', '~> 3.4', '>= 3.4.2'
-end
 
-group :test do
   # factory_girl_rails provides integration between factory_girl and rails 3 or newer (currently just automatic factory definition loading)
   gem 'factory_girl_rails', '~> 4.8'
 
-  # rspec-rails is a testing framework for Rails 3+.
-  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
-
   # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
   gem 'faker', '~> 1.7', '>= 1.7.3'
+end
+
+group :test do
+  # rspec-rails is a testing framework for Rails 3+.
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
 
   # Extracting `assigns` and `assert_template` from ActionDispatch.
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'

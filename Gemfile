@@ -58,6 +58,9 @@ group :test do
 
   # rspec-rails is a testing framework for Rails 3+.
   gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
+
+  # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
+  gem 'faker', '~> 1.7', '>= 1.7.3'
 end
 
 group :development do

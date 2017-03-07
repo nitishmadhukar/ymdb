@@ -41,6 +41,9 @@ gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.14.0'
 
+# ActiveModel::Serializers allows you to generate your JSON in an object-oriented and convention-driven manner.
+gem 'active_model_serializers', '~> 0.10.5'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

@@ -35,9 +35,26 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Autoload dotenv in Rails.
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+
+  # Use Pry as your rails console
+  gem 'pry-rails', '~> 0.3.5'
+
+  # Combine 'pry' with 'byebug'. Adds 'step', 'next', 'finish', 'continue' and 'break' commands to control execution.
+  gem 'pry-byebug', '~> 3.4', '>= 3.4.2'
+end
+
+group :test do
+  # factory_girl_rails provides integration between factory_girl and rails 3 or newer (currently just automatic factory definition loading)
+  gem 'factory_girl_rails', '~> 4.8'
+
+  # rspec-rails is a testing framework for Rails 3+.
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
 end
 
 group :development do

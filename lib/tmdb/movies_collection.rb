@@ -17,7 +17,8 @@ module Tmdb
       movies = []
       movie_id = last_movie_id + 1
       while movies.count < 10
-        movies << Tmdb::Movie.new(movie_id).details
+        details = Tmdb::Movie.new(movie_id).details
+        movies << details if details
         movie_id += 1
       end
       return movies

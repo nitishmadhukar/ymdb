@@ -18,8 +18,11 @@ function moviesList(page) {
 function renderMovie(movie) {
   source = movie_source(movie.backdrop_path)
   return(
-    "<div class='col-xs-6 col-md-3 text-center'>" +
-        "<img class='img img-thumbnail' src=" + source + " title=" + movie.title + "/>" +
+    "<div class='col-xs-6 col-md-3 text-center movie'>" +
+        "<div class='thumbnail'>" +
+          "<img src=" + source + " title=" + movie.title + "/>" +
+          "<div class='caption'><h3>" + movie.title + "</h3></div>" +
+        "</div>" +
     "</div>"
   );
 }

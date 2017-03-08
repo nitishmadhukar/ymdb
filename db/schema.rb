@@ -10,34 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307212739) do
+ActiveRecord::Schema.define(version: 20170308045942) do
 
   create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean  "adult"
     t.string   "backdrop_path"
-    t.float    "budget",               limit: 24
+    t.float    "budget",                limit: 24
     t.string   "genres"
     t.string   "homepage"
     t.integer  "tmdb_id"
     t.string   "original_language"
     t.string   "original_title"
-    t.text     "overview",             limit: 65535
-    t.float    "popularity",           limit: 24
+    t.text     "overview",              limit: 65535
+    t.float    "popularity",            limit: 24
     t.string   "poster_path"
     t.string   "production_companies"
     t.string   "production_countries"
     t.date     "release_date"
-    t.float    "revenue",              limit: 24
+    t.float    "revenue",               limit: 24
     t.integer  "runtime"
     t.string   "spoken_languages"
     t.string   "status"
-    t.text     "tagline",              limit: 65535
+    t.text     "tagline",               limit: 65535
     t.string   "title"
     t.boolean  "video"
-    t.float    "vote_average",         limit: 24
+    t.float    "vote_average",          limit: 24
     t.integer  "vote_count"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "imdb_id"
+    t.text     "belongs_to_collection", limit: 65535
   end
 
 end

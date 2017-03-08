@@ -11,7 +11,9 @@ module Tmdb
     end
 
     def details
-      Tmdb::Api.new(@movie_id, :get).response
+      details = Tmdb::Api.new(@movie_id, :get).response
+      return nil unless details.keys.include? :id
+      details
     end
 
     def method_missing(method_id, *args, &block)

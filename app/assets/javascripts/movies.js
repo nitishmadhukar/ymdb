@@ -18,19 +18,17 @@ function moviesList(page) {
 function renderMovie(movie) {
   source = movie_source(movie.backdrop_path)
   return(
-    `
-      <div class='col-xs-6 col-md-3 text-center'>
-        <img class='img img-thumbnail' src=${source} title='${movie.title}'/>
-      </div>
-    `
+    "<div class='col-xs-6 col-md-3 text-center'>" +
+        "<img class='img img-thumbnail' src=" + source + " title=" + movie.title + "/>" +
+    "</div>"
   );
 }
 
 function movie_source(path) {
   if(path) {
-    return `https://image.tmdb.org/t/p/w500${path}`;
+    return "https://image.tmdb.org/t/p/w500" + path;
   } else {
-    return `https://image.tmdb.org/t/p/w500/z2QUexmccqrvw1kDMw3R8TxAh5E.jpg`; // Default image as some images are not available
+    return "https://image.tmdb.org/t/p/w500/z2QUexmccqrvw1kDMw3R8TxAh5E.jpg"; // Default image as some images are not available
   }
 }
 

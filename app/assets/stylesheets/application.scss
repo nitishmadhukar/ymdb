@@ -1,0 +1,15 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  background-color: #000;
+}
+
+header {
+  @extend .page-header;
+  @extend .text-center;
+}
+
+h1 {
+  color: #e50914;
+}

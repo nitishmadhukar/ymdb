@@ -2,7 +2,12 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: :show
 
   def index
-    @movies = Movie.all
+    @movies = Movie.list(params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render json: @movies }
+      format.js
+    end
   end
 
   def show

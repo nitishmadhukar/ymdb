@@ -1,9 +1,15 @@
 class Movie < ApplicationRecord
   @@last_db_clear ||= Time.zone.now # Last db clear should be stored in a persistent storage in realtime apps
 
+  validates_presence_of :tmdb_id
+
   def self.list(page)
   	movies = paginate(page: page, per_page: 10)
-  	movies = Tmdb::MoviesCollection.next10(Movie.last.server_id) if movies.to_a.count == 0
+    if movies.to_a.count == 0
+      movies = load_next10_from_tmdb
+      save_to_db(movies)
+    end
+    return Array(movies)
   end
 
   def self.last_db_clear
@@ -11,13 +17,12 @@ class Movie < ApplicationRecord
   end
 
   def self.clear_db
-  	destroy_all if time_for_movies_destroy?
-  	reset_last_db_clear_time
-  end
-
-  def self.save_from_tmdb(movie_id)
-  	movie_details = Tmdb::Movie.new(movie_id).details
-  	new(movie_details).save if movie_details
+    if time_for_movies_destroy?
+  	  destroy_all
+  	  reset_last_db_clear_time
+    else
+      return nil
+    end
   end
 
   def id=(value)
@@ -37,5 +42,17 @@ class Movie < ApplicationRecord
 
   def self.reset_last_db_clear_time
   	@@last_db_clear = Time.zone.now
+  end
+
+  def self.load_next10_from_tmdb
+    last_movie_id = Movie.last.tmdb_id if Movie.last
+    last_movie_id ||= 0
+    Tmdb::MoviesCollection.next10(last_movie_id)
+  end
+
+  def self.save_to_db(movies)
+    movies.each do |movie_details|
+      new(movie_details).save
+    end
   end
 end

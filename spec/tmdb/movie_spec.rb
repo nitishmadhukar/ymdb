@@ -12,9 +12,18 @@ RSpec.describe Tmdb::Movie do
   end
 
   describe '#details' do
-    it 'retrieves details of the movie' do
-      allow_any_instance_of(Tmdb::Api).to receive(:response) { {test_key: 'test_value'} }
-      expect(@movie.details[:test_key]).to eq('test_value')
+    context 'when tmdb data is available' do
+      it 'retrieves details of the movie' do
+        allow_any_instance_of(Tmdb::Api).to receive(:response) { {id: 'test_value'} }
+        expect(@movie.details[:id]).to eq('test_value')
+      end
+    end
+
+    context 'when tmdb data is not available' do
+      it 'returns nil' do
+        allow_any_instance_of(Tmdb::Api).to receive(:response) { {test_key: 'test_value'} }
+        expect(@movie.details).to be_nil
+      end
     end
   end
 

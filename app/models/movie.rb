@@ -12,6 +12,11 @@ class Movie < ApplicationRecord
     return Array(movies)
   end
 
+  def id=(value)
+    tmdb_id = :tmdb_id
+    send("#{tmdb_id}=", value)
+  end
+
   def self.last_db_clear
   	@@last_db_clear
   end
@@ -23,11 +28,6 @@ class Movie < ApplicationRecord
     else
       return nil
     end
-  end
-
-  def id=(value)
-  	tmdb_id = :tmdb_id
-  	send("#{tmdb_id}=", value)
   end
 
   private

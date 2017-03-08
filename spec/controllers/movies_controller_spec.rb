@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe MoviesController do
   before :each do
-    @test_movie = FactoryGirl.create(:movie)
+    FactoryGirl.create(:movie)
+    @test_movie = Movie.first
   end
 
   describe 'GET#index' do

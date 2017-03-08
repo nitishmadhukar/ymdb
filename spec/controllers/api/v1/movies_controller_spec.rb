@@ -37,7 +37,8 @@ RSpec.describe Api::V1::MoviesController do
 
   describe 'GET#show' do
     before :each do
-      @test_movie = FactoryGirl.create(:movie)
+      FactoryGirl.create(:movie)
+      @test_movie = Movie.first
     end
 
     context 'when API Token is provided' do

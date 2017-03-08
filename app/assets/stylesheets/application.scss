@@ -10,6 +10,15 @@ header {
   @extend .text-center;
 }
 
-h1 {
+h1 a, h1 a:hover {
   color: #e50914;
+  text-decoration: none;
+}
+
+.glyphicon-plus {
+  color: green;
+}
+
+.glyphicon-minus {
+  color: red;
 }

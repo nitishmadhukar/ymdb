@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308082547) do
+ActiveRecord::Schema.define(version: 20170308174531) do
+
+  create_table "favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "movie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_favorites_on_movie_id", using: :btree
+  end
 
   create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean  "adult"
@@ -42,4 +49,5 @@ ActiveRecord::Schema.define(version: 20170308082547) do
     t.text     "belongs_to_collection", limit: 65535
   end
 
+  add_foreign_key "favorites", "movies"
 end

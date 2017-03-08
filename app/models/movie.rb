@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  has_one :favorite, dependent: :destroy
+
   @@last_db_clear ||= Time.zone.now # Last db clear should be stored in a persistent storage in realtime apps
 
   validates_presence_of :tmdb_id

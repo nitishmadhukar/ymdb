@@ -1,0 +1,16 @@
+<%= render 'shared/header' %>
+
+<div id='favorites-list'>
+	<% @favorites.each do |f| %>
+    <div class='col-xs-6 col-md-3 text-center movie'>
+      <div class='thumbnail'>
+        <img src="<%= 'https://image.tmdb.org/t/p/w500' + f.backdrop_path %>" title="<%= f.title %>"/>
+        <div class='caption'><h3><%= f.title %></h3></div>
+        <%= link_to f.favorite, method: :delete do %>
+          <span class='glyphicon glyphicon-minus' aria-hidden='true'></span>
+        <% end %>
+      </div>
+    </div>
+	<% end %>
+</div>
+<div class='clearfix'></div>

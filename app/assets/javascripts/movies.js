@@ -22,6 +22,7 @@ function renderMovie(movie) {
         "<div class='thumbnail'>" +
           "<img src=" + source + " title=" + movie.title + "/>" +
           "<div class='caption'><h3>" + movie.title + "</h3></div>" +
+          "<span id='add-favorite' class='glyphicon glyphicon-plus' aria-hidden='true' onclick='addFavorite(" + movie.id + ")'></span>" +
         "</div>" +
     "</div>"
   );
@@ -33,6 +34,20 @@ function movie_source(path) {
   } else {
     return "https://image.tmdb.org/t/p/w500/z2QUexmccqrvw1kDMw3R8TxAh5E.jpg"; // Default image as some images are not available
   }
+}
+
+function addFavorite(movie_id) {
+  $.ajax({
+    type: 'POST',
+    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    url: 'favorites?movie_id=' + movie_id,
+    success: function(data) {
+      alert('Movie is added to your favorites');
+    },
+    error: function(xhr, status, err) {
+      alert('Movie could not be added to favorites. Try again later.');
+    }
+  });
 }
 
 $(document).ready(function() {

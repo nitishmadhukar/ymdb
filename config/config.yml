@@ -2,6 +2,8 @@ default: &default
   tmdb:
     api_key: <%= ENV["TMDB_API_KEY"] %>
     api_v3: 'https://api.themoviedb.org/3/movie'
+  movie_db_clear:
+    time: 1800
 
 development:
   <<: *default

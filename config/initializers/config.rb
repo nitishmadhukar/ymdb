@@ -12,3 +12,4 @@ info = YAML.load(
 
 app_env = info[Rails.env.to_sym]
 TMDB_INFO = app_env[:tmdb]
+MOVIE_DB_CLEAR = app_env[:movie_db_clear]

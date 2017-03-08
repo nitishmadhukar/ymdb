@@ -47,7 +47,7 @@ class Movie < ApplicationRecord
   def self.load_next10_from_tmdb
     last_movie_id = Movie.last.tmdb_id if Movie.last
     last_movie_id ||= 0
-    ::Tmdb::MoviesCollection.next10(last_movie_id)
+    Tmdb::MoviesCollection.next10(last_movie_id)
   end
 
   def self.save_to_db(movies)

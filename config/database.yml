@@ -15,7 +15,6 @@ default: &default
   pool: 5
   username: root
   password: <%= ENV['YMDB_DATABASE_PASSWORD'] %>
-  socket: /tmp/mysql.sock
 
 development:
   <<: *default

@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308045942) do
+ActiveRecord::Schema.define(version: 20170308082547) do
 
   create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean  "adult"
     t.string   "backdrop_path"
     t.float    "budget",                limit: 24
-    t.string   "genres"
+    t.text     "genres",                limit: 65535
     t.string   "homepage"
     t.integer  "tmdb_id"
     t.string   "original_language"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20170308045942) do
     t.text     "overview",              limit: 65535
     t.float    "popularity",            limit: 24
     t.string   "poster_path"
-    t.string   "production_companies"
-    t.string   "production_countries"
+    t.text     "production_companies",  limit: 65535
+    t.text     "production_countries",  limit: 65535
     t.date     "release_date"
     t.float    "revenue",               limit: 24
     t.integer  "runtime"

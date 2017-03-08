@@ -12,5 +12,15 @@ module Tmdb
         super
       end
     end
+
+    def self.next10(last_movie_id)
+      movies = []
+      movie_id = last_movie_id + 1
+      while movies.count < 10
+        movies << Tmdb::Movie.new(movie_id).details
+        movie_id += 1
+      end
+      return movies
+    end
   end
 end

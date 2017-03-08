@@ -41,14 +41,8 @@ gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.14.0'
 
-# ActiveModel::Serializers allows you to generate your JSON in an object-oriented and convention-driven manner.
-gem 'active_model_serializers', '~> 0.10.5'
-
 # will_paginate provides a simple API for performing paginated queries with Active Record, DataMapper and Sequel, and includes helpers for rendering pagination links in Rails, Sinatra and Merb web apps.
 gem 'will_paginate', '~> 3.1', '>= 3.1.5'
-
-# Link header pagination for Rails and Grape APIs
-gem 'api-pagination', '~> 4.5', '>= 4.5.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -73,6 +67,9 @@ group :test do
 
   # Extracting `assigns` and `assert_template` from ActionDispatch.
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.1'
+
+  # Strategies for cleaning databases. Can be used to ensure a clean state for testing.
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
 end
 
 group :development do

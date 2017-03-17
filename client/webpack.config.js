@@ -11,6 +11,7 @@ const config = {
     'es5-shim/es5-shim',
     'es5-shim/es5-sham',
     'babel-polyfill',
+    'bootstrap-loader',
     './app/bundles/Ymdb/startup/registration',
   ],
 
@@ -24,6 +25,7 @@ const config = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
+    new webpack.ProvidePlugin({$: 'jquery', jQuery: 'jquery'})
   ],
   module: {
     rules: [
@@ -41,6 +43,18 @@ const config = {
         test: /\.jsx?$/,
         use: 'babel-loader',
         exclude: /node_modules/,
+      },
+      {
+        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        use: 'imports-loader?jQuery=jquery'
+      },
+      {
+        test: /\.(woff2?|svg)$/,
+        use: 'url-loader?limit=10000'
+      },
+      {
+        test: /\.(ttf|eot)$/,
+        use: 'file-loader'
       },
     ],
   },

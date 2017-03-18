@@ -1,5 +1,6 @@
 class Favorite < ApplicationRecord
   belongs_to :movie
+  validates :movie_id, uniqueness: true
 
   def self.list
   	favorites = Favorite.includes(:movie)

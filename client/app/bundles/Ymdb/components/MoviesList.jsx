@@ -6,12 +6,22 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import FontIcon from 'material-ui/FontIcon';
 
 export default class MoviesList extends React.Component {
-  state = {
-    movies: this.props.movies
+  constructor(props) {
+    super(props);
+    this.state = {
+      movies: this.props.movies,
+      favorites: this.props.favorites,
+      favorited_movie_ids: []
+    }
   }
 
   static propTypes = {
-    movies: React.PropTypes.array
+    movies: React.PropTypes.array,
+    favorites: React.PropTypes.array
+  }
+
+  componentDidMount() {
+    this.retrieveFavoritedMovieIds(this.props.favorites);
   }
 
   movieImageSource = (movie_path) => {
@@ -20,6 +30,104 @@ export default class MoviesList extends React.Component {
     } else {
       return('https://image.tmdb.org/t/p/w500/z2QUexmccqrvw1kDMw3R8TxAh5E.jpg');
     }
+  }
+
+  toggleFavorites = (movie_id) => {
+    var favorited_movie_ids = this.state.favorited_movie_ids;
+    if(favorited_movie_ids.indexOf(movie_id) == -1) {
+      this.addToFavorites(movie_id);
+    } else {
+      this.removeFromFavorites(movie_id);
+    }
+  }
+
+  addToFavorites = (movie_id) => {
+    $.ajax({
+      url: 'favorites',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      type: 'POST',
+      dataType: 'json',
+      data: {movie_id: movie_id},
+      success: function(result, status, xhr) {
+        if(xhr.status == 201) {
+          let favorites = this.addItemToArray(this.state.favorites, result.favorite);
+          let favorited_movie_ids = this.addItemToArray(this.state.favorited_movie_ids, result.favorite.movie_id);
+          this.setState({
+            favorites: favorites,
+            favorited_movie_ids: favorited_movie_ids
+          });
+        } else {
+          alert('Movie could not be added to favorites. Try again later.');
+        }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        alert('Movie could not be added to favorites. Try again later.');
+      }.bind(this)
+    });
+  }
+
+  removeFromFavorites = (movie_id) => {
+    var favorite_id = this.retrieveFavoritedIdByMovieId(movie_id);
+    $.ajax({
+      url: 'favorites/' + favorite_id,
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      type: 'DELETE',
+      dataType: 'json',
+      success: function(result, status, xhr) {
+        if(xhr.status == 200) {
+          let favorites = this.removeItemFromArray(this.state.favorites, this.retrieveFavoriteByFavoritedId(favorite_id));
+          let favorited_movie_ids = this.removeItemFromArray(this.state.favorited_movie_ids, movie_id);
+          this.setState({
+            favorites: favorites,
+            favorited_movie_ids: favorited_movie_ids
+          });
+        } else {
+          alert('Movie could not be removed from favorites. Try again later.');
+        }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        alert('Movie could not be removed from favorites. Try again later.');
+      }.bind(this)
+    });
+  }
+
+  retrieveFavoritedMovieIds = () => {
+    var favorited_movie_ids = [];
+    this.state.favorites.map((favorite) => {
+      favorited_movie_ids.push(favorite.movie_id);
+    });
+    this.setState({favorited_movie_ids: favorited_movie_ids});
+  }
+
+  retrieveFavoritedIdByMovieId = (movie_id) => {
+    var favorite = this.state.favorites.find((favorite) => { return(favorite.movie_id == movie_id) });
+    return favorite.id;
+  }
+
+  retrieveFavoriteByFavoritedId = (favorite_id) => {
+    var favorite = this.state.favorites.find((favorite) => { return(favorite.id == favorite_id) });
+    return favorite;
+  }
+
+  favorited = (movie_id) => {
+    let favorited_movie_ids = this.state.favorited_movie_ids;
+    if(favorited_movie_ids.indexOf(movie_id) != -1) {
+      return({fill: 'rgb(255, 0, 0)'});
+    } else {
+      return({fill: 'rgb(255, 255, 255)'});
+    }
+  }
+
+  addItemToArray = (array_of_items, item) => {
+    var new_array_of_items = array_of_items;
+    new_array_of_items.push(array_of_items, item);
+    return new_array_of_items;
+  }
+
+  removeItemFromArray = (array_of_items, item) => {
+    var new_array_of_items = array_of_items;
+    new_array_of_items.splice(new_array_of_items.indexOf(item), 1);
+    return new_array_of_items;
   }
 
   render() {
@@ -31,6 +139,11 @@ export default class MoviesList extends React.Component {
               <CardMedia overlay={<CardTitle title={movie.title} />}>
                 <img src={this.movieImageSource(movie.backdrop_path)} />
               </CardMedia>
+              <CardActions>
+                <FloatingActionButton mini={true}>
+                  <ActionFavorite onClick={() => this.toggleFavorites(movie.id)} style={this.favorited(movie.id)} />
+                </FloatingActionButton>
+              </CardActions>
             </Card>
           )}
         </div>

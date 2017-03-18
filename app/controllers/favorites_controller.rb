@@ -7,18 +7,24 @@ class FavoritesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @favorites }
-      format.js
     end
   end
 
   def create
     favorite = Favorite.new(movie: @movie)
-    favorite.save
+    if favorite.save
+      render json: {favorite: favorite}, status: :created
+    else
+      render json: {}, status: :unprocessible_entity
+    end
   end
 
   def destroy
-    @favorite.destroy
-    redirect_to favorites_path
+    if @favorite.destroy
+      render json: {}, status: :ok
+    else
+      render json: {}, status: :unprocessible_entity
+    end
   end
 
   private

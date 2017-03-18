@@ -3,10 +3,10 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.list(params[:page])
+    @favorites = Favorite.all
     respond_to do |format|
       format.html
       format.json { render json: @movies }
-      format.js
     end
   end
 

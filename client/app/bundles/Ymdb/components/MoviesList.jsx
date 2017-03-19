@@ -4,6 +4,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class MoviesList extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export default class MoviesList extends React.Component {
     this.state = {
       movies: this.props.movies,
       favorites: this.props.favorites,
-      favorited_movie_ids: []
+      favorited_movie_ids: [],
+      page: 2
     }
   }
 
@@ -130,6 +132,31 @@ export default class MoviesList extends React.Component {
     return new_array_of_items;
   }
 
+  loadMore = () => {
+    var page = this.state.page;
+    $.ajax({
+      url: 'movies?page=' + page,
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      type: 'GET',
+      dataType: 'json',
+      success: function(result, status, xhr) {
+        if(xhr.status == 200) {
+          let movies = this.state.movies
+          result.movies.map((movie) => { movies.push(movie) });
+          this.setState({
+            movies: movies,
+            page: page + 1
+          });
+        } else {
+          alert('Movies could not be loaded. Try again later.');
+        }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        alert('Movies could not be loaded. Try again later.');
+      }.bind(this)
+    });
+  }
+
   render() {
     return(
       <MuiThemeProvider>
@@ -146,6 +173,10 @@ export default class MoviesList extends React.Component {
               </CardActions>
             </Card>
           )}
+          <div className='clearfix'></div>
+          <div className='row text-center'>
+            <RaisedButton label="Load more..." secondary={true} onClick={this.loadMore} />
+          </div>
         </div>
       </MuiThemeProvider>
     );

@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
     @favorites = Favorite.all
     respond_to do |format|
       format.html
-      format.json { render json: @movies }
+      format.json { render json: { movies: @movies }, status: :ok }
     end
   end
 

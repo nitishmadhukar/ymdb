@@ -162,7 +162,7 @@ export default class MoviesList extends React.Component {
       <MuiThemeProvider>
         <div>
           {this.state.movies.map((movie) =>
-            <Card key={movie.id} className='col-xs-6 col-md-4'>
+            <Card key={movie.id} className='col-xs-6 col-md-4' style={{backgroundColor: 'black'}}>
               <CardMedia overlay={<CardTitle title={movie.title} />}>
                 <img src={this.movieImageSource(movie.backdrop_path)} />
               </CardMedia>
